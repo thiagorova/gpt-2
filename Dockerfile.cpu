@@ -6,7 +6,7 @@ RUN mkdir ~/.ssh
 COPY git-textGen /root/.ssh/id_rsa
 RUN chmod 400 ~/.ssh/id_rsa
 
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && apt-get install -y git make
 
 RUN ssh -T -o StrictHostKeyChecking=no git@github.com || true
 RUN git clone ssh://git@github.com/thiagorova/textGen
