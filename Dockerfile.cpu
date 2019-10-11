@@ -1,10 +1,31 @@
 FROM tensorflow/tensorflow:1.12.0-py3
+MAINTAINER Thiago Vasconcellos "thiagorova@gmail.com"
+ENV REFRESHED_AT 2019-10-11
+
+RUN mkdir ~/.ssh
+COPY git-textGen /root/.ssh/id_rsa
+RUN chmod 400 ~/.ssh/id_rsa
+
+RUN apt-get update && apt-get install -y git
+
+RUN ssh -T -o StrictHostKeyChecking=no git@github.com || true
+RUN git clone ssh://git@github.com/thiagorova/textGen
+WORKDIR textGen
 
 ENV LANG=C.UTF-8
 RUN mkdir /gpt-2
 WORKDIR /gpt-2
 ADD . /gpt-2
-RUN pip3 install -r requirements.txt
-RUN python3 download_model.py 124M
-RUN python3 download_model.py 355M
-RUN python3 download_model.py 774M
+RUN make deps
+
+
+#This is what changes every build
+ARG build
+ENV BUILD $build
+RUN git pull origin master
+# this is repeated here indeed because of Docker order rebuilding
+RUN make deps
+
+EXPOSE 8892
+ENTRYPOINT ["make", "run"]
+
