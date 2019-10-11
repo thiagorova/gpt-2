@@ -1,3 +1,5 @@
+This Code does **NOT** belong to me, or was made by me. view [Openai/gpt-2] (https://github.com/openai/gpt-2) for original source
+
 **Status:** Archive (code is provided as-is, no updates expected)
 
 # gpt-2

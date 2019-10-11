@@ -5,3 +5,4 @@ tornado==4.3
 pydub==0.21.0
 pylint==1.8.3
 protobuf==3.7.0
+tensorflow==1.14
