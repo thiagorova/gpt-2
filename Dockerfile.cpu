@@ -6,7 +6,7 @@ RUN mkdir ~/.ssh
 COPY git-textGen /root/.ssh/id_rsa
 RUN chmod 400 ~/.ssh/id_rsa
 
-RUN apt-get update && apt-get install -y git make
+RUN apt-get install -y software-properties-common python3-software-properties && add-apt-repository -y ppa:deadsnakes/ppa && apt-get update && apt-get upgrade -y && apt-get install -y git python3.6 python3.6-dev python3-pip python3-setuptools
 
 RUN ssh -T -o StrictHostKeyChecking=no git@github.com || true
 RUN git clone ssh://git@github.com/thiagorova/textGen
