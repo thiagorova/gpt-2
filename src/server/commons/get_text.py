@@ -9,7 +9,7 @@ import model, sample, encoder
 class TextGenerator ():
   @staticmethod
   def get_sample(
-    sample_text
+    sample_text,
     model_name='774M',
     seed=None,
     nsamples=1,
