@@ -1,6 +1,9 @@
 pyenv = python3.6
 nosetest = $(pyenv) -m nose -s
+
 run:
+	export LC_ALL=en_US.UTF-8
+	export LANG=en_US.UTF-8
 	$(pyenv) src/server/app.py
 
 setup:
