@@ -4,9 +4,9 @@ import json
 import os
 import numpy as np
 import tensorflow as tf
-import commons.model
-import commons.sample
-import commons.encoder
+import commons.model as model
+import commons.sample as sample
+import commons.encoder as encoder
 
 class TextGenerator ():
   @staticmethod

@@ -1,5 +1,5 @@
 import tensorflow as tf
-import commons.model
+import commons.model as model
 
 def top_k_logits(logits, k):
     if k == 0:
