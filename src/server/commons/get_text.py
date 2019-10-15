@@ -20,7 +20,7 @@ class TextGenerator ():
     temperature=1,
     top_k=40,
     top_p=1,
-    models_dir='../../../models',
+    models_dir='models',
   ):
     """
     Interactively run the model
