@@ -37,7 +37,6 @@ METHOD_NOT_ALLOWED = Error("METHOD_NOT_ALLOWED",
 MISSING_FIELD = lambda key: Error("MISSING_FIELD",
                                   "Field {} is missing or has a null value.".format(key), 400)
 
-#We define 'paramether' as a value in request's URL
 MISSING_PARAMETER = lambda key: Error("MISSING_PARAMETER",
                                       "Paramether '{}' is missing or has a null value.".format(key), 400)
 
