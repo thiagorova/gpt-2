@@ -3,3 +3,4 @@ __pycache__
 models/
 Dockerfile
 git-textGen
+my_app.log
