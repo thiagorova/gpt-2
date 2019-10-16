@@ -1,4 +1,4 @@
-from commons.get_text import TextGenerator
+from commons.text_model_singleton import TextGeneratorSingleton as tgs
 from .base_handler import BaseHandler
 from commons.errors import MISSING_FIELD
 from tornado import escape
@@ -15,6 +15,10 @@ class TextHandler(BaseHandler):
             self.write_error(MISSING_FIELD("text"))
         else:
           response = {}
-          response["text"] = TextGenerator.get_sample(data["text"])
+          try:
+            response["text"] = tgs.genSample(data["text"])
+          except:
+            tgs.clean()
+            response["text"] = tgs.genSample(data["text"])
           self.write(response)
 

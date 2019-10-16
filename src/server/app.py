@@ -6,10 +6,10 @@ import tornado.ioloop
 import tornado.web
 from tornado.log import enable_pretty_logging
 from routes import ROUTES
+from commons.text_model_singleton import TextGeneratorSingleton as tgs
 
 if __name__ == "__main__":
     enable_pretty_logging()
-
     ARGS = sys.argv
     ARGS.append("--log_file_prefix=my_app.log")
     tornado.options.parse_command_line(ARGS)
@@ -17,4 +17,5 @@ if __name__ == "__main__":
     APP = tornado.web.Application(handlers=ROUTES)
     APP.listen(8892, max_buffer_size=1000000000)
     tornado.ioloop.IOLoop.current().start()
+    tgs.init_model()
 
