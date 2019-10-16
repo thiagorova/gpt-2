@@ -7,9 +7,7 @@ run:
 	$(pyenv) src/server/app.py
 
 setup:
-	$(pyenv) -m pip install --upgrade pip
-	$(pyenv) -m pip install --upgrade setuptools
-	$(pyenv) -m pip install --upgrade -r requirements.txt
+	make deps
 	#$(pyenv) download_model.py 124M
 	#$(pyenv) download_model.py 355M
 	$(pyenv) download_model.py 774M
