@@ -7,15 +7,18 @@ class TextGeneratorSingleton():
 
   @staticmethod
   def clean():
-    del TextGeneratorSingleton.tg
+    try:
+      del TextGeneratorSingleton.tg
+    except:
+      pass
     TextGeneratorSingleton.init_model()
 
   @staticmethod
-  def genSample(sample):
+  def genSample(sample, length=None):
     try:
-      return TextGeneratorSingleton.tg.get_sample(sample)
+      return TextGeneratorSingleton.tg.get_sample(sample, length)
     except:
       TextGeneratorSingleton.init_model()
-      return TextGeneratorSingleton.tg.get_sample(sample)
+      return TextGeneratorSingleton.tg.get_sample(sample, length)
 
 
