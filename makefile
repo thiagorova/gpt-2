@@ -9,8 +9,8 @@ run:
 setup:
 	make deps
 	#$(pyenv) download_model.py 124M
-	#$(pyenv) download_model.py 355M
-	$(pyenv) download_model.py 774M
+	$(pyenv) download_model.py 355M
+	#$(pyenv) download_model.py 774M
 
 deps:
 	$(pyenv) -m pip install --upgrade pip
