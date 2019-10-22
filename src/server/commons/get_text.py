@@ -40,19 +40,37 @@ class TextGenerator():
         np.random.seed(seed)
         tf.set_random_seed(seed)
 
+        self.setTrainer(1024, top_k)
+
     def __del__(self):
-        self.sess.close()
+        try:
+            self.sess.close()
+        except:
+            pass
 
     def get_sample(self, sample_text, length=None, top_k=None):
         """
           gets trained model and applies it to user sample
         """
-        self.setTrainer(length, top_k)
+        #self.setTrainer(length, top_k)
         context_tokens = self.enc.encode(sample_text)
         out = self.sess.run(self.output, feed_dict={
             self.context: [context_tokens for _ in range(self.batch_size)]
         })[:, len(context_tokens):]
-        return self.enc.decode(out[0])
+        text = self.enc.decode(out[0])
+        return self.limit_text(text, length)
+
+    def limit_text (self, text, length):
+        if length is None or length >= len(text):
+            return text
+        else:
+            pos = length
+            while text[pos] != ' ' and pos > 0:
+                pos -= 1
+            if pos < 2:
+                return text
+            return text[:pos]
+
 
     def setTrainer (self, length, top_k):
         if top_k is None:
