@@ -1,11 +1,15 @@
+#!/usr/bin/env python
+# coding: utf8
+
 import json
 import os
+import re
 import numpy as np
 import tensorflow as tf
 import commons.model as model
 import commons.sample as sample
 import commons.encoder as encoder
-
+from commons.result_file import ResultFile
 
 class TextGenerator():
     def __init__(
@@ -40,7 +44,7 @@ class TextGenerator():
         np.random.seed(seed)
         tf.set_random_seed(seed)
 
-        self.setTrainer(1024, top_k)
+        self.setTrainer(length, top_k)
 
     def __del__(self):
         try:
@@ -48,28 +52,31 @@ class TextGenerator():
         except:
             pass
 
-    def get_sample(self, sample_text, length=None, top_k=None):
+    def get_sample(self, sample_text, result_file, length=None, top_k=None):
         """
           gets trained model and applies it to user sample
         """
         #self.setTrainer(length, top_k)
         context_tokens = self.enc.encode(sample_text)
+        print('generating text')
         out = self.sess.run(self.output, feed_dict={
             self.context: [context_tokens for _ in range(self.batch_size)]
         })[:, len(context_tokens):]
+        print('text generated')
         text = self.enc.decode(out[0])
-        return self.limit_text(text, length)
+        text = self.limit_text(text, length)
+        ResultFile.write_to_file(result_file, text)
 
     def limit_text (self, text, length):
         if length is None or length >= len(text):
             return text
-        else:
-            pos = length
-            while text[pos] != ' ' and pos > 0:
-                pos -= 1
-            if pos < 2:
-                return text
-            return text[:pos]
+        pos = length
+        reTerm = re.compile(u'[.,;()[\]!?"―“”–:•«€¨⁄•±‚ ©ªº@∫~∞‘¡“¶¢|≠¿´`]', re.UNICODE)
+        while re.search(reTerm, text[pos]) and pos > 0:
+            pos -= 1
+        if pos < 2:
+            return text
+        return text[:pos]
 
 
     def setTrainer (self, length, top_k):

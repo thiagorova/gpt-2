@@ -1,4 +1,7 @@
+import string
+from multiprocessing.pool import ThreadPool
 from commons.get_text import TextGenerator
+from random import choice
 
 class TextGeneratorSingleton():
   @staticmethod
@@ -14,11 +17,11 @@ class TextGeneratorSingleton():
     TextGeneratorSingleton.init_model()
 
   @staticmethod
-  def genSample(sample, length=None):
+  def gen_sample(sample, length=None, result_file=None):
     try:
-      return TextGeneratorSingleton.tg.get_sample(sample, length)
+      TextGeneratorSingleton.tg
     except:
-      TextGeneratorSingleton.init_model()
-      return TextGeneratorSingleton.tg.get_sample(sample, length)
-
+      TextGeneratorSingleton.clean()
+    pool = ThreadPool()
+    pool.apply_async(TextGeneratorSingleton.tg.get_sample, args=(sample, result_file, length))
 

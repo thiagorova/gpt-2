@@ -16,7 +16,7 @@ if __name__ == "__main__":
     tornado.options.parse_command_line(ARGS)
 
     APP = tornado.web.Application(handlers=ROUTES)
-    APP.listen(8892, max_buffer_size=1000000000)
+    APP.listen(8895, max_buffer_size=1000000000)
     print('Starting model training')
     tgs.init_model()
     print('System ready to roll')
